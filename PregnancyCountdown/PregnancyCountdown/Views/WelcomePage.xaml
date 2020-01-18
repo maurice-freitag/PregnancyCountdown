@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PregnancyCountdown.Views.WelcomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:c="clr-namespace:PregnancyCountdown.Converter"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="BrowseItemsPage"
+    Title="{Binding Title}"
+    mc:Ignorable="d">
+    <ContentPage.Resources>
+        <c:DaysLeftConverter x:Key="daysLeftConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="OnSettingsItemClicked" Text="Settings" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout
+        Margin="0,0,0,60"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Label
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Text="{Binding Prefix}" />
+
+        <Label
+            Margin="0,20,0,20"
+            FontSize="Header"
+            HorizontalTextAlignment="Center"
+            Text="{Binding Settings.DueDate, Converter={StaticResource daysLeftConverter}, TargetNullValue=0, FallbackValue=0, UpdateSourceEventName=Foo}" />
+        <Label
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Text="Days away!" />
+    </StackLayout>
+
+</ContentPage>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="PregnancyCountdown.Views.SettingsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Settings"
+    mc:Ignorable="d">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="Cancel_Clicked" Text="Cancel" />
+        <ToolbarItem
+            Clicked="Save_Clicked"
+            Command="{Binding SaveCommand}"
+            Text="Save" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout Padding="15" Spacing="20">
+            <Label FontSize="Medium" Text="When are you due?" />
+            <DatePicker
+                Date="{Binding Settings.DueDate}"
+                FontSize="Small"
+                MinimumDate="{Binding MinimumDate}" />
+            <Label FontSize="Medium" Text="How should I call your baby?" />
+            <Entry
+                FontSize="Small"
+                Placeholder="Baby"
+                Text="{Binding Settings.BabyName}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="0"
+                    FontSize="Medium"
+                    Text="Receive daily notifications?" />
+                <CheckBox Grid.Column="2" IsChecked="{Binding Settings.EnableNotifications}" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
