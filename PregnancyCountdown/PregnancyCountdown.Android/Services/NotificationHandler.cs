@@ -1,8 +1,8 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
+using Android.Icu.Util;
 using Android.Support.V4.App;
-using Java.Lang;
 using PregnancyCountdown.Droid.Services;
 using PregnancyCountdown.Services;
 
@@ -10,36 +10,35 @@ namespace PregnancyCountdown.Droid
 {
     public class NotificationHandler : INotificationHandler
     {
-        internal static readonly string DAYS_KEY = "count";
-        internal static readonly string CHANNEL_ID = "pregnancy_countdown_notification";
-        internal static readonly int NOTIFICATION_ID = 1810;
-        private static Context NOTIFICATION_CONTEXT;
-        private static string ALARM_SERVICE;
+        private static string actionName = "net.gedoens.LOCAL_NOTIFICATION";
 
-        internal static void SetNotificationContext(Context notificationContext, string alarmService)
-        {
-            NOTIFICATION_CONTEXT = notificationContext;
-            ALARM_SERVICE = alarmService;
-        }
         public void UpdateNotificationPreferences(bool enableNotifications)
         {
-            var notificationManager = NotificationManagerCompat.From(NOTIFICATION_CONTEXT);
-            notificationManager.CancelAll();
-
-            var intent = new Intent(NOTIFICATION_CONTEXT, typeof(NotificationBroadcastReceiver));
-            var pendingIntent = PendingIntent.GetBroadcast(NOTIFICATION_CONTEXT, NOTIFICATION_ID, intent, PendingIntentFlags.UpdateCurrent);
-            var alarmManager = (AlarmManager)NOTIFICATION_CONTEXT.GetSystemService(ALARM_SERVICE);
-            alarmManager.Cancel(pendingIntent);
-
             if (enableNotifications)
             {
-                var interval = 5000;
-                var referenceDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                var totalMilliSeconds = (long)(DateTime.Now.AddSeconds(5).ToUniversalTime() - referenceDate).TotalMilliseconds;
-                if (totalMilliSeconds < JavaSystem.CurrentTimeMillis())
-                    totalMilliSeconds += interval;
+                var calendar = Calendar.GetInstance(Android.Icu.Util.TimeZone.Default);
+                calendar.Set(CalendarField.HourOfDay, 19);
+                calendar.Set(CalendarField.Minute, DateTime.Now.Minute + 1);
 
-                alarmManager.SetRepeating(AlarmType.RtcWakeup, totalMilliSeconds, interval, pendingIntent);
+                var requestCode = Convert.ToInt32(new Random().Next(100000, 999999).ToString("D6"));
+                var intent = new Intent(Application.Context, typeof(NotificationBroadcastReceiver))
+                    .SetAction(actionName);
+                var pendingIntent = PendingIntent.GetBroadcast(Application.Context, requestCode, intent, PendingIntentFlags.Immutable);
+
+                var alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
+                alarmManager.SetRepeating(AlarmType.RtcWakeup, calendar.TimeInMillis, 30000, pendingIntent);
+            }
+            else
+            {
+                var requestCode = Convert.ToInt32(new Random().Next(100000, 999999).ToString("D6"));
+                var intent = new Intent(Application.Context, typeof(NotificationBroadcastReceiver))
+                    .SetAction(actionName);
+                var pendingIntent = PendingIntent.GetBroadcast(Application.Context, requestCode, intent, PendingIntentFlags.Immutable);
+
+                var alarmManager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
+                alarmManager.Cancel(pendingIntent);
+                var notificationManager = NotificationManagerCompat.From(Application.Context);
+                notificationManager.CancelAll();
             }
         }
     }
