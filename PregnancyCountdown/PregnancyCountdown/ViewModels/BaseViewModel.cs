@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace PregnancyCountdown.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         private bool isBusy;
         public bool IsBusy

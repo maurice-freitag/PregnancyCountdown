@@ -13,7 +13,6 @@ namespace PregnancyCountdown.Models
         }
 
         private string babyName;
-
         public string BabyName
         {
             get => babyName;
