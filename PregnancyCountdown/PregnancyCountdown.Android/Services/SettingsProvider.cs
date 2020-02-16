@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Azure.NotificationHubs;
 using Newtonsoft.Json.Linq;
 using PregnancyCountdown.Models;
 using PregnancyCountdown.Services;
@@ -25,30 +25,39 @@ namespace PregnancyCountdown.Droid
         public void SetSettings(Settings settings)
         {
             var previousSettings = GetSettings();
-            if (!previousSettings.EnableNotifications && settings.EnableNotifications)
-                _ = ScheduleWelcomeNotificationAsync();
+            if (previousSettings.EnableNotifications != settings.EnableNotifications)
+            {
+                if (settings.EnableNotifications)
+                    _ = RegisterDevice();
+                else
+                    _ = UnregisterDevice();
+            }
 
             Preferences.Set(nameof(Settings.DueDate), settings.DueDate);
             Preferences.Set(nameof(Settings.BabyName), settings.BabyName);
             Preferences.Set(nameof(Settings.EnableNotifications), settings.EnableNotifications);
         }
 
-        private async Task ScheduleWelcomeNotificationAsync()
+        private async Task RegisterDevice()
         {
-            var deviceIdTag = $"deviceId:{GetDeviceId()}";
-            var hub = NotificationHubClient.CreateClientFromConnectionString(Constants.FullAccessConnectionString, Constants.NotificationHubName);
-            await hub.SendFcmNativeNotificationAsync(BuildJsonPayload(MessageType.WelcomeMessage), deviceIdTag);
-            var notification = new FcmNotification(BuildJsonPayload(MessageType.DailyMessage), deviceIdTag);
-            await hub.ScheduleNotificationAsync(notification, DateTimeOffset.Now.AddMinutes(8), deviceIdTag);
+            using var client = new HttpClient();
+            var body = new JObject();
+            body["deviceId"] = GetDeviceId();
+            var httpContent = new StringContent(body.ToString());
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await client.PostAsync(Constants.RegisterDeviceUri, httpContent).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
         }
 
-        private string BuildJsonPayload(MessageType messageType)
+        private async Task UnregisterDevice()
         {
-            var outer = new JObject();
-            var inner = new JObject();
-            inner[nameof(MessageType)] = (int)messageType;
-            outer["data"] = inner;
-            return outer.ToString();
+            using var client = new HttpClient();
+            var body = new JObject();
+            body["deviceId"] = GetDeviceId();
+            var httpContent = new StringContent(body.ToString());
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = await client.PostAsync(Constants.UnregisterDeviceUri, httpContent).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
         }
 
         public static string GetDeviceId()

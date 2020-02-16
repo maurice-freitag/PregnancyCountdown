@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Support.V4.App;
 using Android.Util;
 using Firebase.Messaging;
-using Microsoft.Azure.NotificationHubs;
-using Newtonsoft.Json.Linq;
 using PregnancyCountdown.Converter;
 using PregnancyCountdown.Models;
 using PregnancyCountdown.Services;
@@ -66,26 +63,6 @@ namespace PregnancyCountdown.Droid
             var notification = BuildNotification(GetDailyNotificationText(settings), pendingIntent);
             var notificationManager = NotificationManager.FromContext(this);
             notificationManager.Notify(0, notification);
-
-            _ = ScheduleDailyNotification();
-        }
-
-        private async Task ScheduleDailyNotification()
-        {
-            var deviceIdTag = $"deviceId:{SettingsProvider.GetDeviceId()}";
-            var hub = NotificationHubClient.CreateClientFromConnectionString(Constants.FullAccessConnectionString, Constants.NotificationHubName);
-            await hub.SendFcmNativeNotificationAsync(BuildJsonPayload(MessageType.WelcomeMessage), deviceIdTag).ConfigureAwait(false);
-            var notification = new FcmNotification(BuildJsonPayload(MessageType.DailyMessage));
-            await hub.ScheduleNotificationAsync(notification, DateTimeOffset.Now.AddMinutes(5), deviceIdTag).ConfigureAwait(false);
-        }
-
-        private string BuildJsonPayload(MessageType messageType)
-        {
-            var outer = new JObject();
-            var inner = new JObject();
-            inner[nameof(MessageType)] = (int)messageType;
-            outer["data"] = inner;
-            return outer.ToString();
         }
 
         private Android.App.Notification BuildNotification(string message, PendingIntent intent)
