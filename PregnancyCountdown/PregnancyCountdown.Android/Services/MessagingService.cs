@@ -1,6 +1,7 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.Support.V4.App;
 using Android.Util;
 using Firebase.Messaging;
@@ -70,7 +71,7 @@ namespace PregnancyCountdown.Droid
             return new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID)
                 .SetContentTitle("Your Pregnancy Countdown")
                 .SetSmallIcon(Resource.Drawable.icons8_heart_64)
-                //.SetLargeIcon(Resource.Drawable.icons8_heart_64)
+                .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.icons8_heart_64))
                 .SetContentText(message)
                 .SetAutoCancel(true)
                 .SetShowWhen(false)
