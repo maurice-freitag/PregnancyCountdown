@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pregnancy_countdown/services/local_notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BabyNameWidget extends StatefulWidget {
@@ -19,8 +20,9 @@ class _BabyNameWidgetState extends State<BabyNameWidget> {
   }
 
   setBabyName(String name) {
-    SharedPreferences.getInstance().then((prefs) {
+    SharedPreferences.getInstance().then((prefs) async {
       prefs.setString(BabyNameWidget.keyBabyName, name);
+      await LocalNotificationService().settingsUpdated();
       updateBabyNameDisplay();
     });
   }

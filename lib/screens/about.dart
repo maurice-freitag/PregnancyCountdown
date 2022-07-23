@@ -56,9 +56,9 @@ class AboutPage extends StatelessWidget {
                   style: TextStyle(fontSize: 12, color: Colors.black)),
               TextButton(
                   onPressed: () async {
-                    await launchUrl(Uri.parse("https://icons8.com"));
+                    await launchUrl(Uri.parse("https://flaticon.com"));
                   },
-                  child: const Text("Icons8"))
+                  child: const Text("Flaticon"))
             ],
           ))
     ]);

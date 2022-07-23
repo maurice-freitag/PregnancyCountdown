@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pregnancy_countdown/services/local_notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EnableNotificationsWidget extends StatefulWidget {
@@ -26,9 +27,10 @@ class _EnableNotificationsWidgetState extends State<EnableNotificationsWidget> {
   }
 
   setEnableNotifications(bool enableNotifications) {
-    SharedPreferences.getInstance().then((prefs) {
+    SharedPreferences.getInstance().then((prefs) async {
       prefs.setBool(EnableNotificationsWidget.keyEnableNotifications,
           enableNotifications);
+      await LocalNotificationService().settingsUpdated();
       updateDueDateDisplay();
     });
   }
@@ -55,7 +57,7 @@ class _EnableNotificationsWidgetState extends State<EnableNotificationsWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               Text(
-                "Enable notifications?",
+                "Enable daily notifications?",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18,

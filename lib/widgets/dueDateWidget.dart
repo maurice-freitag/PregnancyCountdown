@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pregnancy_countdown/services/local_notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DueDateWidget extends StatefulWidget {
@@ -20,8 +21,9 @@ class _DueDateWidgetState extends State<DueDateWidget> {
   }
 
   setDueDate(DateTime? date) {
-    SharedPreferences.getInstance().then((prefs) {
+    SharedPreferences.getInstance().then((prefs) async {
       prefs.setString(DueDateWidget.keyDueDate, date?.toString() ?? "");
+      await LocalNotificationService().settingsUpdated();
       updateDueDateDisplay();
     });
   }

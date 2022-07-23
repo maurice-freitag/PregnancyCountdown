@@ -1,4 +1,4 @@
-package com.example.pregnancy_countdown
+package net.gedoens.pregnancycountdown
 
 import io.flutter.embedding.android.FlutterActivity
 
