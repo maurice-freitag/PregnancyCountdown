@@ -68,8 +68,8 @@ class LocalNotificationService {
         const Duration(hours: 0), 1788, sendNotification,
         rescheduleOnReboot: true, allowWhileIdle: true, exact: true);
 
-    var startDate = DateTime.now().add(const Duration(days: 1));
-    startDate = DateTime(startDate.year, startDate.month, startDate.day, 10, 0);
+    var startDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 0);
     await AndroidAlarmManager.periodic(
         const Duration(days: 1), 1789, sendNotification,
         rescheduleOnReboot: true,
