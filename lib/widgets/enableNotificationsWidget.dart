@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pregnancy_countdown/services/local_notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

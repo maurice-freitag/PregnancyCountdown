@@ -1,5 +1,4 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
-import 'package:intl/date_time_patterns.dart';
 import 'package:pregnancy_countdown/widgets/babyNameWidget.dart';
 import 'package:pregnancy_countdown/widgets/dueDateWidget.dart';
 import 'package:pregnancy_countdown/widgets/enableNotificationsWidget.dart';
