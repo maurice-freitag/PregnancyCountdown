@@ -1,3 +1,4 @@
+import 'package:drawable/drawable.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
@@ -60,7 +61,8 @@ class AboutPage extends StatelessWidget {
                   },
                   child: const Text("Flaticon"))
             ],
-          ))
+          )),
+      const Image(image: DrawableImage("heart"))
     ]);
   }
 }
