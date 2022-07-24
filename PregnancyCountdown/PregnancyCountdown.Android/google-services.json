@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "313008512787",
+    "firebase_url": "https://pregnancycountdown-c3e73.firebaseio.com",
+    "project_id": "pregnancycountdown-c3e73",
+    "storage_bucket": "pregnancycountdown-c3e73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313008512787:android:596f8a0fe82337050a44e6",
+        "android_client_info": {
+          "package_name": "net.gedoens.pregnancycountdown"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313008512787-rim8151viirign9puhvn27ka7abbaj4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACUAS_B0WNKKy-Iejg0KDT5pcjkZonEo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313008512787-rim8151viirign9puhvn27ka7abbaj4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

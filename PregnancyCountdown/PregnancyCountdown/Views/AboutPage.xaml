@@ -48,22 +48,22 @@
                     </Label.GestureRecognizers>
                 </Label>
             </StackLayout>
-            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                <Image
+            <ImageButton
                     HeightRequest="64"
-                    Source="icons8_icons8_64"
-                    VerticalOptions="Center" />
-                <Label
-                    FontSize="Small"
-                    Text="Icons8 | FREE DESIGN RESOURCES AND SOFTWARE"
-                    TextColor="Blue"
-                    TextDecorations="Underline"
-                    VerticalTextAlignment="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OpenLinkCommand}" CommandParameter="https://icons8.com" />
-                    </Label.GestureRecognizers>
-                </Label>
-            </StackLayout>
+                    Source="icons8"
+                    VerticalOptions="Center" >
+                <ImageButton.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenLinkCommand}" CommandParameter="https://icons8.com" />
+                </ImageButton.GestureRecognizers>
+            </ImageButton>
+            <ImageButton
+                    HeightRequest="64"
+                    Source="flaticon"
+                    VerticalOptions="Center" >
+                <ImageButton.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenLinkCommand}" CommandParameter="https://icons8.com" />
+                </ImageButton.GestureRecognizers>
+            </ImageButton>
         </StackLayout>
     </Grid>
 

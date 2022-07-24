@@ -6,10 +6,12 @@ namespace PregnancyCountdown.Converter
 {
     public class DaysLeftConverter : IValueConverter
     {
+        public static int Convert(DateTime dueDate) => (int)Math.Max(Math.Ceiling((dueDate - DateTime.Now).TotalDays), 0);
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is DateTime dueDate)
-                return Math.Max(Math.Ceiling((dueDate - DateTime.Now).TotalDays), 0);
+                return Convert(dueDate);
             return default;
         }
 
