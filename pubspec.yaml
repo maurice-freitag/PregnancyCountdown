@@ -30,7 +30,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   url_launcher: ^6.1.5
   shared_preferences: ^2.0.15
   android_alarm_manager_plus: ^2.0.6

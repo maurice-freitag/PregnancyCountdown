@@ -64,19 +64,12 @@ class LocalNotificationService {
     await _unscheduleNotifications();
     await AndroidAlarmManager.initialize();
 
-    await AndroidAlarmManager.oneShot(
-        const Duration(hours: 0), 1788, sendNotification,
-        rescheduleOnReboot: true, allowWhileIdle: true, exact: true);
-
-    var startDate = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 0);
     await AndroidAlarmManager.periodic(
-        const Duration(days: 1), 1789, sendNotification,
+        const Duration(days: 1), 1787, sendNotification,
         rescheduleOnReboot: true,
         allowWhileIdle: true,
         exact: true,
-        wakeup: true,
-        startAt: startDate);
+        startAt: DateTime.now());
   }
 
   static Future<void> sendNotification() async {
