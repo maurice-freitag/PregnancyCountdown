@@ -57,7 +57,7 @@ class LocalNotificationService {
 
   Future<void> _unscheduleNotifications() async {
     await AndroidAlarmManager.initialize();
-    await AndroidAlarmManager.cancel(1789);
+    await AndroidAlarmManager.cancel(1787);
   }
 
   Future<void> _scheduleNotifications() async {
@@ -86,6 +86,10 @@ class LocalNotificationService {
     }
 
     var daysLeft = dueDate.difference(DateTime.now()).inDays;
+    if (daysLeft < 0) {
+      return;
+    }
+
     var message = "$babyName will arrive in just $daysLeft days!";
 
     await initialize();
